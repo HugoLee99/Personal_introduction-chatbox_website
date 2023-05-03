@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,4 +16,102 @@
     <h1 style="text-align: center">Welcome to my ChatBox!</h1>
 </div>
 </body>
+</html> -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>chatbox</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Chat application</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/mycss.css">
+  </head>
+  <body>
+    <ul class="nav nav-tabs">
+      <li role="presentation" ><a href="../../webdesign/root.html">Home</a></li>
+      <li role="presentation" ><a href="../../webdesign/second_page.html">Profile</a></li>
+      <li role="presentation" class="active"><a href="#">Messages</a></li>
+    </ul>
+    <div class="main_container">
+        <h1 style="text-align: center">Welcome to my ChatBox!</h1>
+    
+    
+    <div><h2>The Users online:</h2></div>
+
+    <div id="online_user"></div>
+
+    <h2>chat box</h2>
+    <div id="chatbox"></div>
+    <h2>console message</h2>
+    <ul id="messages"></ul>
+    <form id="message-form">
+      <label for="name" id="lab">What is your name:</label>
+      <input id="name">
+      <label for="message-input">Hello <span id="login_user"></span>! Leave your message here:</label>
+      <input id="message-input" autocomplete="off" />
+
+      <div><button onclick="hidetext(),getname()">Send</button></div>
+    </form>
+    </div>
+    <script>
+      // 创建socket对象
+      var chatbox = document.getElementById('chatbox')
+      var login_user = document.getElementById('login_user')
+      var online_user = document.getElementById('online_user')//这个改成当前用户是谁
+      const socket = io();
+
+      //监听来自在线用户
+      socket.on('login user',function (users) {
+      online_user.innerText = users;
+      })
+      // 监听来自服务器的用户登入登出消息
+      socket.on('console message', function(login_msg,off_msg) {
+
+        $('#messages').append($('<li>').text(login_msg,off_msg));
+
+      });
+      //monitoring the chat message sent by server
+      socket.on('chat message',function (message_back) {
+        chatbox.innerText = message_back
+      });
+
+      //monitoring the disconnect message
+
+
+
+  // Get the user name and send it to the server when the socket is disconnected
+      socket.on('disconnected', function() {
+
+    socket.emit('del_user', login_user.innerText);
+  });
+
+
+
+
+      // 提交表单时发送消息
+      $('form').submit(function(e) {
+
+        const Inputname = $('#name');
+        const username = Inputname.val();
+        socket.emit('user name',username);
+        const messageInput = $('#message-input');
+        const message = messageInput.val();
+        socket.emit('chat message', message,login_user.innerText);
+        messageInput.val('');//refresh the input box
+        return false;
+      });
+      // hide input name box after enter your name
+      function hidetext() {
+        var mychar = document.getElementById('name');
+        mychar.style.display='none';
+        var mycharlab = document.getElementById('lab');
+        mycharlab.style.display='none';
+      }
+      function  getname() {
+          login_user.innerText =document.getElementById('name').value;
+      }
+    </script>
+  </body>
 </html>

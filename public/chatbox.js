@@ -9,6 +9,7 @@ app.set('view engine', 'ejs');
 
 // offer root dict
 app.use(express.static('public'));
+app.set('views', 'e:/PycharmProjects/website_assessment_2023/public/views');
 
 // render the ejs
 app.get('/', function (req, res) {
@@ -58,53 +59,36 @@ io.on('connection', function (socket) {
         })
     });
 
-    // monitoring socket log out/exits
+    // monitoring user uncommon disconnect
     socket.on('disconnect', function () {
         console.log('a user disconnected')
-        socket.emit('disconnected')
-        //io.emit('login user', users)
+        
+        
     });
 
 
 
 socket.on('del_user', function (delname) {
   console.log('del_user event received with delname = ' + delname);
-
+  //find the del_user in users list
   let index = users.indexOf(delname);
   if (index !== -1) {
     users.splice(index, 1);
     console.log(delname + ' has been deleted');
     io.emit('console message', 'user: ' + delname + ' exits');
     io.emit('login user', users);
-  } else {
-    console.log('can not find ' + delname);
-    socket.emit('del_user_error', 'User ' + delname + ' not found');
+  } 
+  // if not something went wrong 
+  else {
+    console.log('can not find ' + delname+' something went wrong!');
+    err_message = 'User ' + delname + ' not found, something went wrong!'
+    socket.emit('console message', err_message);
   }
 });
 });
 
 // 启动服务器
 server.listen(3000, function () {
-    console.log('listening on  http://192.168.56.1:3000');
+    console.log('listening on  http://localhost:3000');
 })
 
-//use socket to delete user in list
-//     socket.on('del_user', function (delname) {
-//         console.log('del_user event received with delname = ' + delname);
-//
-//         users.forEach(function (item,index,arr){
-//         if (item === delname) {
-//             arr.splice(index,1);
-//             console.log(delname+'has been deleted')
-//         }
-//         else{
-//             console.log('can not find'+delname)
-//         }
-//         console.log(users);
-//     });
-//         let off_msg = 'user: ' + delname + ' exits';
-//         io.emit('console message', off_msg);
-//         io.emit('login user', users);
-//
-//     })
-// use socket to delete user in list

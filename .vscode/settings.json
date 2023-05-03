@@ -1,0 +1,6 @@
+{
+    "editor.dropIntoEditor.enabled": false,
+    "editor.codeActionsOnSave": {},
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.saveAllFilesBeforeRun": true
+}
