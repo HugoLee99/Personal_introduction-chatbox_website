@@ -55,7 +55,7 @@ io.on('connection', function (socket) {
 
     })
 
-    // monitoring chat message
+    // monitoring chat message and write it in txt file
     socket.on('chat message', function (msg, name) {
         console.log(name+'message: ' + msg);
         var message_back = name + ' : ' + msg + "\n";
