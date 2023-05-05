@@ -3,30 +3,29 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const fs = require('fs')
+const path = require('path')
 let users = [];
 // set engine
 app.set('view engine', 'ejs');
 
 // offer root dict
 app.use(express.static('public'));
-app.set('views', 'e:/PycharmProjects/website_assessment_2023/public/views');
+app.set('views', path.join(__dirname, 'views'));
 
 // render the chat box page
 app.get('/chatbox', function (req, res) {
     res.render('chatbox');
 });
 // render the main page
-app.get('/',function(req,res){
-  res.render('root',{
-    title:'main paper'
-  })  
-})
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/views/root.html');
+});
+
 //render the second_page
-app.get('/detail',function(req,res){
-    res.render('second_page',{
-      title:'detail paper'
-    })  
-  })
+app.get('/detail', function(req, res) {
+  res.sendFile(__dirname + '/views/second_page.html');
+});
+
 //  monitoring socket connect
 io.on('connection', function (socket) {
     console.log('a user connected');
