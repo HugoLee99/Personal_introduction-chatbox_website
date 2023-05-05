@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.set('views', 'e:/PycharmProjects/website_assessment_2023/public/views');
 
-// render the chatbox page
+// render the chat box page
 app.get('/chatbox', function (req, res) {
     res.render('chatbox');
 });
