@@ -32,7 +32,7 @@
         </div>
         <div>
           <label for="message-input">Hello <span id="login_user"></span>! Leave your message here:</label>
-          <input id="message-input" />
+          <input id="message-input" /><span id="type_check"></span>
         </div>
         <div> </div>
         <div><button onclick="hidetext(),getname()" class="btn btn-primary" data-toggle="button"> login & send</button>
@@ -58,11 +58,33 @@
     var online_user = document.getElementById('online_user')
     var mycharlab = document.getElementById('lab');
     var mychar = document.getElementById('name');
-    var mysignout = document.getElementById('sign_out')
+    var mysignout = document.getElementById('sign_out');
+    var messageInput = document.getElementById('message-input');
     // unshow the sign out button before sign in
     mysignout.style.display = 'none'
     const socket = io();
 
+    var isTyping = false;
+    // create an EventListener to monitor user's typing state
+    messageInput.addEventListener("keyup",function(){
+      if (isTyping) return;
+      userName = mychar.value
+      socket.emit('typing',userName);
+      isTyping = true;
+      // each 1 second have a check
+      setTimeout(function(){
+      socket.emit('typing',userName);
+      isTyping = false},1000)
+    })
+    // recieve the message form server and show it in html
+    socket.on('typing',function(messg){
+      var type_check = document.getElementById('type_check')
+      type_check.innerHTML = messg;
+      // The message only show 3 seconds
+      setTimeout(function(){
+        type_check.innerHTML = ' '
+      },3000)
+    })
     //monitoring the login user
     socket.on('login user', function (users) {
       online_user.innerText = users;

@@ -76,7 +76,12 @@ io.on('connection', function (socket) {
         
     });
 
-
+    // monitoring user message typing in message box
+    socket.on('typing',function(e){
+        var messg = e+' is typing'
+        console.log(messg)
+        io.emit('typing',messg)
+    })
 
 socket.on('del_user', function (delname) {
   console.log('del_user event received with delname = ' + delname);
