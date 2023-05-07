@@ -29,6 +29,9 @@ app.get('/detail', function(req, res) {
 //  monitoring socket connect
 io.on('connection', function (socket) {
     console.log('a user connected');
+    fs.readFile('filename.txt', 'utf8', function (err, data) {
+        io.emit('chat message', data);
+    })
 
     //  monitoring socket joins / submits their name
     socket.on('user name', function (username) {
@@ -59,13 +62,10 @@ io.on('connection', function (socket) {
         console.log(name+'message: ' + msg);
         var message_back = name + ' : ' + msg + "\n";
         fs.appendFile('filename.txt', message_back, function (err) {
-            if (err) throw err
-            fs.readFile('filename.txt', 'utf8', function (err, data) {
+            if (err) throw efs.readFile('filename.txt', 'utf8', function (err, data) {
                 if (err) throw err;
                 io.emit('chat message', data);
             })
-
-
         })
     });
 

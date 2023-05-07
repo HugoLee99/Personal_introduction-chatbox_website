@@ -8,34 +8,108 @@
   <meta charset="UTF-8">
   <title>Chat application</title>
   <link rel="stylesheet" href="../css/bootstrap.css">
-  <link rel="stylesheet" href="../css/mycss.css">
+    <style>
+.text_selfDesign {
+    font-weight: bolder;
+    color: white;
+}
+.background_upper{
+    background-color: rgb(53, 123, 199);
+}
+.background{
+    background-color: #080808;
+}
+
+.head_image {
+    margin: auto;
+    margin-top: 36px;
+    width: 240px;
+    margin-bottom:55px ;
+    height: 240px;
+}
+.head_image img{
+    height: 100%;
+    width: 100%;
+
+}
+.main_container{
+    margin: auto;
+    width: 1200px;
+    height: auto;
+    background-color: whitesmoke;
+    border-radius:15px;
+
+}
+.main_container .font_color{
+    color: white;
+}
+.main_container h2{
+    color: white;
+}
+.platform {
+            width: 1000px;
+
+            margin: 0 auto;
+            margin-top:40px;
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+.platform img{
+            width: 330px;
+            height: 100%;
+
+}
+.chatbox{
+  margin:auto;
+  width:1100px;
+  
+  border:1px solid black;
+  border-radius:15px;
+  margin-bottom:20px;
+}
+.inputbox{
+  margin-bottom:10px
+}
+body{
+width:100%;
+height:100%;
+
+background: url(../static/background.png);
+background-repeat: no-repeat;
+background-size: cover;
+overflow-x: hidden;
+
+
+}
+</style>
 </head>
 
 <body>
   <ul class="nav nav-tabs">
     <li role="presentation"><a href="../">Home</a></li>
     <li role="presentation"><a href="../detail">Profile</a></li>
-    <li role="presentation" class="active"><a href="#">Messages</a></li>
+    <li role="presentation"><a href="#">Messages</a></li>
   </ul>
-  <div class="main_container" >
-    <div style="text-align: center; background-color: peachpuff;">
-      <h1>Welcome to my ChatBox!</h1>
-
+  <div class="main_container">
+  <h1 style="text-align: center">Welcome to my ChatBox!</h1>
+    <div style="margin-left:20px;">
       <div>
         <h2 style="color: black;">chat box</h2>
       </div>
-      <div id="chatbox"></div>
+      <div id="chatbox" class="chatbox"></div>
       <form>
-        <div>
+        <div class="inputbox">
           <label for="name" id="lab">What is your name:</label>
-          <input id="name"/>
+          <input id="name" />
         </div>
-        <div>
-          <label for="message-input">Hello <span id="login_user"></span>! Leave your message here:</label>
-          <input id="message-input" /><span id="type_check"></span>
+        <div class="inputbox">
+          <div <label for="message-input">Hello <span id="login_user"></span>! Leave your message here:</label></div>
+          <textarea id="message-input"rows="4" cols="40"></textarea>
+          <span id="type_check"></span>
         </div>
-        <div> </div>
-        <div><button onclick="hidetext(),getname()" class="btn btn-primary" data-toggle="button"> login & send</button>
+        
+        <div class="inputbox"><button onclick="hidetext(),getname()" class="btn btn-primary" data-toggle="button"> login & send</button>
         </div>
       </form>
       <div id="sign_out"><button onclick="delname(),hidebutton()" class="btn btn-primary" data-toggle="button">log
@@ -50,7 +124,7 @@
     </div>
     <ul id="messages"></ul>
   </div>
-  
+
   <script>
     // create variables
     var chatbox = document.getElementById('chatbox')
@@ -66,24 +140,25 @@
 
     var isTyping = false;
     // create an EventListener to monitor user's typing state
-    messageInput.addEventListener("keyup",function(){
+    messageInput.addEventListener("keyup", function () {
       if (isTyping) return;
       userName = mychar.value
-      socket.emit('typing',userName);
+      socket.emit('typing', userName);
       isTyping = true;
       // each 1 second have a check
-      setTimeout(function(){
-      socket.emit('typing',userName);
-      isTyping = false},1000)
+      setTimeout(function () {
+        socket.emit('typing', userName);
+        isTyping = false
+      }, 1000)
     })
     // recieve the message form server and show it in html
-    socket.on('typing',function(messg){
+    socket.on('typing', function (messg) {
       var type_check = document.getElementById('type_check')
       type_check.innerHTML = messg;
       // The message only show 3 seconds
-      setTimeout(function(){
+      setTimeout(function () {
         type_check.innerHTML = ' '
-      },3000)
+      }, 3000)
     })
     //monitoring the login user
     socket.on('login user', function (users) {
@@ -100,7 +175,7 @@
       chatbox.innerText = message_back
     });
 
-    
+
 
     // form when submmit 
     $('form').submit(function (e) {
@@ -135,11 +210,13 @@
       mysignout.style.display = 'none'
     }
     function delname() {
+      
       //show input name box
       mychar.style.display = 'inline';
 
       mycharlab.style.display = 'inline';
       socket.emit('del_user', login_user.innerText)
+      login_user.innerText = ' '
     }
   </script>
 </body>
