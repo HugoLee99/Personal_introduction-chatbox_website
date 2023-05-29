@@ -2,87 +2,98 @@
 <html>
 
 <head>
-  <title>chatbox</title>
+
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <meta charset="UTF-8">
   <title>Chat application</title>
   <link rel="stylesheet" href="../css/bootstrap.css">
-    <style>
-.text_selfDesign {
-    font-weight: bolder;
-    color: white;
-}
-.background_upper{
-    background-color: rgb(53, 123, 199);
-}
-.background{
-    background-color: #080808;
-}
+  <style>
+    .text_selfDesign {
+      font-weight: bolder;
+      color: white;
+    }
 
-.head_image {
-    margin: auto;
-    margin-top: 36px;
-    width: 240px;
-    margin-bottom:55px ;
-    height: 240px;
-}
-.head_image img{
-    height: 100%;
-    width: 100%;
+    .background_upper {
+      background-color: rgb(53, 123, 199);
+    }
 
-}
-.main_container{
-    margin: auto;
-    width: 1200px;
-    height: auto;
-    background-color: whitesmoke;
-    border-radius:15px;
+    .background {
+      background-color: #080808;
+    }
 
-}
-.main_container .font_color{
-    color: white;
-}
-.main_container h2{
-    color: white;
-}
-.platform {
-            width: 1000px;
+    .head_image {
+      margin: auto;
+      margin-top: 36px;
+      width: 240px;
+      margin-bottom: 55px;
+      height: 240px;
+    }
 
-            margin: 0 auto;
-            margin-top:40px;
-            display: flex;
-            flex-wrap: wrap;
+    .head_image img {
+      height: 100%;
+      width: 100%;
 
-        }
-.platform img{
-            width: 330px;
-            height: 100%;
+    }
 
-}
-.chatbox{
-  margin:auto;
-  width:1100px;
-  
-  border:1px solid black;
-  border-radius:15px;
-  margin-bottom:20px;
-}
-.inputbox{
-  margin-bottom:10px
-}
-body{
-width:100%;
-height:100%;
+    .main_container {
+      margin: auto;
+      width: 1200px;
+      height: auto;
+      background-color: whitesmoke;
+      border-radius: 15px;
 
-background: url(../static/background.png);
-background-repeat: no-repeat;
-background-size: cover;
-overflow-x: hidden;
+    }
+
+    .main_container .font_color {
+      color: white;
+    }
+
+    .main_container h2 {
+      color: white;
+    }
+
+    .platform {
+      width: 1000px;
+
+      margin: 0 auto;
+      margin-top: 40px;
+      display: flex;
+      flex-wrap: wrap;
+
+    }
+
+    .platform img {
+      width: 330px;
+      height: 100%;
+
+    }
+
+    .chatbox {
+      margin: auto;
+      width: 1100px;
+
+      border: 1px solid black;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .inputbox {
+      margin-bottom: 10px
+    }
+
+    body {
+      width: 100%;
+      height: 100%;
+
+      background: url(../static/background.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow-x: hidden;
 
 
-}
-</style>
+    }
+  </style>
 </head>
 
 <body>
@@ -92,7 +103,7 @@ overflow-x: hidden;
     <li role="presentation"><a href="#">Messages</a></li>
   </ul>
   <div class="main_container">
-  <h1 style="text-align: center">Welcome to my ChatBox!</h1>
+    <h1 style="text-align: center">Welcome to my ChatBox!</h1>
     <div style="margin-left:20px;">
       <div>
         <h2 style="color: black;">chat box</h2>
@@ -104,12 +115,15 @@ overflow-x: hidden;
           <input id="name" />
         </div>
         <div class="inputbox">
-          <div <label for="message-input">Hello <span id="login_user"></span>! Leave your message here:</label></div>
-          <textarea id="message-input"rows="4" cols="40"></textarea>
+          <div>
+            <label for="message-input">Hello <span id="login_user"></span>! Leave your message here:</label>
+          </div>
+          <textarea id="message-input" rows="4" cols="40"></textarea>
           <span id="type_check"></span>
         </div>
-        
-        <div class="inputbox"><button onclick="hidetext(),getname()" class="btn btn-primary" data-toggle="button"> login & send</button>
+
+        <div class="inputbox"><button onclick="hidetext(),getname()" class="btn btn-primary" data-toggle="button"> login
+            & send</button>
         </div>
       </form>
       <div id="sign_out"><button onclick="delname(),hidebutton()" class="btn btn-primary" data-toggle="button">log
@@ -210,7 +224,7 @@ overflow-x: hidden;
       mysignout.style.display = 'none'
     }
     function delname() {
-      
+
       //show input name box
       mychar.style.display = 'inline';
 
