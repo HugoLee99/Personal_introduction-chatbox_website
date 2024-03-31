@@ -6,7 +6,6 @@
 
 - Website name: self introduction and chat application 
 
-- Student ID: 50079685
 
 - Name: Jia Xu Li （李佳栩）
 
